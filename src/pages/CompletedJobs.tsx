@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ChevronRight, Search, ClipboardCheck, Ruler, DollarSign } from 'lucide-react';
+import { ChevronRight, Search, ClipboardCheck, Ruler } from 'lucide-react';
+import { formatPula } from '@/lib/currency';
 
 export default function CompletedJobs() {
   const { jobs } = useApp();
@@ -28,7 +29,6 @@ export default function CompletedJobs() {
     <div className="p-4 space-y-4">
       <h2 className="text-lg font-bold">Completed Jobs</h2>
 
-      {/* Summary */}
       <div className="grid grid-cols-3 gap-2">
         <Card>
           <CardContent className="p-3 text-center">
@@ -39,8 +39,7 @@ export default function CompletedJobs() {
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
-            <DollarSign className="h-4 w-4 mx-auto text-primary mb-1" />
-            <p className="text-lg font-bold">${totalEarnings.toFixed(0)}</p>
+            <p className="text-lg font-bold">{formatPula(totalEarnings)}</p>
             <p className="text-[10px] text-muted-foreground">Earned</p>
           </CardContent>
         </Card>
@@ -53,13 +52,11 @@ export default function CompletedJobs() {
         </Card>
       </div>
 
-      {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input placeholder="Search jobs..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9" />
       </div>
 
-      {/* Job List */}
       <div className="space-y-2">
         {completed.map(job => {
           const sqm = job.rooms.reduce((s, r) => s + r.length * r.width, 0);

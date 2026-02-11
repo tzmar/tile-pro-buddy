@@ -1,9 +1,10 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, Timer, ClipboardCheck, Settings } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Timer, ClipboardCheck, Settings, CalendarDays } from 'lucide-react';
 
 const NAV_ITEMS = [
   { path: '/', icon: LayoutDashboard, label: 'Home' },
-  { path: '/new-job', icon: PlusCircle, label: 'New Job' },
+  { path: '/new-job', icon: PlusCircle, label: 'New' },
+  { path: '/daily-log', icon: CalendarDays, label: 'Diary' },
   { path: '/timer', icon: Timer, label: 'Timer' },
   { path: '/completed', icon: ClipboardCheck, label: 'Jobs' },
   { path: '/settings', icon: Settings, label: 'Settings' },
@@ -31,7 +32,7 @@ export default function Layout() {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`flex flex-col items-center justify-center gap-0.5 w-16 h-full transition-colors ${
+                className={`flex flex-col items-center justify-center gap-0.5 w-14 h-full transition-colors ${
                   active ? 'text-primary' : 'text-muted-foreground'
                 }`}
               >

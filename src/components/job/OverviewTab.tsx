@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Calculator, Package } from 'lucide-react';
+import { formatPula } from '@/lib/currency';
 
 interface Props { job: Job; updateJob: (j: Job) => void; }
 
@@ -96,7 +97,7 @@ export default function OverviewTab({ job, updateJob }: Props) {
 
           <div className="rounded-lg bg-primary/10 p-3 text-center">
             <p className="text-xs text-muted-foreground">Total Material Cost</p>
-            <p className="text-2xl font-bold text-primary">${totalMatCost.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-primary">{formatPula(totalMatCost)}</p>
           </div>
         </CardContent>
       </Card>

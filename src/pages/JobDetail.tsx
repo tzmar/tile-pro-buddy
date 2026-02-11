@@ -10,6 +10,7 @@ import ToolsTab from '@/components/job/ToolsTab';
 import TasksTab from '@/components/job/TasksTab';
 import TimerTab from '@/components/job/TimerTab';
 import CostingTab from '@/components/job/CostingTab';
+import PhotosTab from '@/components/job/PhotosTab';
 
 export default function JobDetail() {
   const { id } = useParams<{ id: string }>();
@@ -63,6 +64,7 @@ export default function JobDetail() {
           <TabsTrigger value="overview" className="text-xs flex-1">Overview</TabsTrigger>
           <TabsTrigger value="tools" className="text-xs flex-1">Tools</TabsTrigger>
           <TabsTrigger value="tasks" className="text-xs flex-1">Tasks</TabsTrigger>
+          <TabsTrigger value="photos" className="text-xs flex-1">📸</TabsTrigger>
           <TabsTrigger value="timer" className="text-xs flex-1">Timer</TabsTrigger>
           <TabsTrigger value="costing" className="text-xs flex-1">Cost</TabsTrigger>
         </TabsList>
@@ -70,6 +72,7 @@ export default function JobDetail() {
           <TabsContent value="overview" className="m-0"><OverviewTab job={job} updateJob={updateJob} /></TabsContent>
           <TabsContent value="tools" className="m-0"><ToolsTab job={job} updateJob={updateJob} /></TabsContent>
           <TabsContent value="tasks" className="m-0"><TasksTab job={job} updateJob={updateJob} /></TabsContent>
+          <TabsContent value="photos" className="m-0"><PhotosTab job={job} updateJob={updateJob} /></TabsContent>
           <TabsContent value="timer" className="m-0"><TimerTab job={job} updateJob={updateJob} /></TabsContent>
           <TabsContent value="costing" className="m-0"><CostingTab job={job} updateJob={updateJob} /></TabsContent>
         </div>

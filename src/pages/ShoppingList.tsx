@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { PlusCircle, ShoppingCart, Trash2, ArrowLeft } from 'lucide-react';
 import { genId } from '@/data/constants';
 import { useNavigate } from 'react-router-dom';
+import { formatPula } from '@/lib/currency';
 
 export default function ShoppingList() {
   const { shoppingList, setShoppingList } = useApp();
@@ -59,23 +60,21 @@ export default function ShoppingList() {
         <h2 className="text-lg font-bold flex items-center gap-2"><ShoppingCart className="h-5 w-5" /> Shopping List</h2>
       </div>
 
-      {/* Total */}
       {unpurchased.length > 0 && (
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="p-4 text-center">
             <p className="text-xs text-muted-foreground">Total Investment Needed</p>
-            <p className="text-2xl font-bold text-primary">${totalNeeded.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-primary">{formatPula(totalNeeded)}</p>
           </CardContent>
         </Card>
       )}
 
-      {/* Add Item */}
       <Card>
         <CardHeader className="pb-2"><CardTitle className="text-sm">Add Item</CardTitle></CardHeader>
         <CardContent className="space-y-2">
           <Input placeholder="Tool name" value={newName} onChange={e => setNewName(e.target.value)} />
           <div className="flex gap-2">
-            <Input placeholder="Price" type="number" min={0} value={newPrice} onChange={e => setNewPrice(e.target.value)} className="flex-1" />
+            <Input placeholder="Price (P)" type="number" min={0} value={newPrice} onChange={e => setNewPrice(e.target.value)} className="flex-1" />
             <Select value={newPriority} onValueChange={(v: Priority) => setNewPriority(v)}>
               <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
               <SelectContent className="bg-popover">
@@ -91,7 +90,6 @@ export default function ShoppingList() {
         </CardContent>
       </Card>
 
-      {/* Items To Buy */}
       {unpurchased.length > 0 && (
         <Card>
           <CardHeader className="pb-2"><CardTitle className="text-sm">To Buy ({unpurchased.length})</CardTitle></CardHeader>
@@ -101,7 +99,7 @@ export default function ShoppingList() {
                 <Checkbox checked={false} onCheckedChange={() => togglePurchased(item.id)} />
                 <span className="text-sm flex-1">{item.name}</span>
                 <Badge variant={priorityColor(item.priority)} className="text-[10px] h-5">{item.priority}</Badge>
-                {item.estimatedPrice > 0 && <span className="text-xs font-medium">${item.estimatedPrice}</span>}
+                {item.estimatedPrice > 0 && <span className="text-xs font-medium">{formatPula(item.estimatedPrice)}</span>}
                 <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-destructive" onClick={() => deleteItem(item.id)}>
                   <Trash2 className="h-3 w-3" />
                 </Button>
@@ -111,7 +109,6 @@ export default function ShoppingList() {
         </Card>
       )}
 
-      {/* Purchased */}
       {purchased.length > 0 && (
         <Card>
           <CardHeader className="pb-2"><CardTitle className="text-sm text-success">Purchased ({purchased.length})</CardTitle></CardHeader>

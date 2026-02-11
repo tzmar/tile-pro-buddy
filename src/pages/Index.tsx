@@ -1,11 +1,12 @@
 import { useApp } from '@/context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, PlusCircle, ShoppingCart, TrendingUp, Ruler, ChevronRight } from 'lucide-react';
+import { Briefcase, PlusCircle, ShoppingCart, TrendingUp, Ruler, ChevronRight, Camera, CalendarDays, Wrench, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { formatPula } from '@/lib/currency';
 
 export default function Dashboard() {
-  const { jobs, shoppingList } = useApp();
+  const { jobs, shoppingList, settings, dailyLogs } = useApp();
   const navigate = useNavigate();
 
   const activeJobs = jobs.filter(j => j.status === 'active');
@@ -19,8 +20,26 @@ export default function Dashboard() {
   const totalSqm = completedJobs.reduce((sum, j) => sum + j.rooms.reduce((s, r) => s + r.length * r.width, 0), 0);
   const unpurchased = shoppingList.filter(i => !i.purchased).length;
 
+  // Weekly hours from daily logs
+  const now = new Date();
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - now.getDay());
+  const weekStartStr = weekStart.toISOString().split('T')[0];
+  const weekHours = dailyLogs.filter(l => l.date >= weekStartStr).reduce((s, l) => s + l.hoursWorked, 0);
+
+  const todayStr = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const userName = settings.userName || settings.businessName || '';
+
   return (
     <div className="p-4 space-y-4">
+      {/* Welcome */}
+      <div>
+        <h2 className="text-lg font-bold">
+          {userName ? `Hello, ${userName} 👋` : 'Welcome 👋'}
+        </h2>
+        <p className="text-xs text-muted-foreground">{todayStr}</p>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3">
         <Card className="bg-primary text-primary-foreground">
@@ -39,15 +58,15 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardContent className="p-4 flex flex-col items-center">
-            <span className="text-xs text-muted-foreground mb-1">Total Earned</span>
-            <span className="text-xl font-bold text-foreground">${totalEarnings.toFixed(0)}</span>
+            <Clock className="h-5 w-5 text-muted-foreground mb-1" />
+            <span className="text-xl font-bold text-foreground">{weekHours.toFixed(1)}h</span>
+            <span className="text-xs text-muted-foreground">This Week</span>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 flex flex-col items-center">
-            <Ruler className="h-5 w-5 text-muted-foreground mb-1" />
-            <span className="text-xl font-bold text-foreground">{totalSqm.toFixed(0)}m²</span>
-            <span className="text-xs text-muted-foreground">Tiled</span>
+            <span className="text-xs text-muted-foreground mb-1">Total Earned</span>
+            <span className="text-xl font-bold text-foreground">{formatPula(totalEarnings)}</span>
           </CardContent>
         </Card>
       </div>
@@ -57,11 +76,17 @@ export default function Dashboard() {
         <Button onClick={() => navigate('/new-job')} className="h-14 text-sm gap-2" size="lg">
           <PlusCircle className="h-5 w-5" /> New Job
         </Button>
+        <Button onClick={() => navigate('/daily-log')} variant="outline" className="h-14 text-sm gap-2" size="lg">
+          <CalendarDays className="h-5 w-5" /> Log Work
+        </Button>
         <Button onClick={() => navigate('/shopping')} variant="outline" className="h-14 text-sm gap-2 relative" size="lg">
-          <ShoppingCart className="h-5 w-5" /> Shopping List
+          <ShoppingCart className="h-5 w-5" /> Shopping
           {unpurchased > 0 && (
             <span className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">{unpurchased}</span>
           )}
+        </Button>
+        <Button onClick={() => navigate('/timer')} variant="outline" className="h-14 text-sm gap-2" size="lg">
+          <Clock className="h-5 w-5" /> Timer
         </Button>
       </div>
 

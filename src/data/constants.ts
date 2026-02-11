@@ -57,6 +57,9 @@ export const DEFAULT_SETTINGS: Settings = {
   commonTileSizes: [30, 45, 60],
   businessName: '',
   measurementUnit: 'meters',
+  userName: '',
 };
+
+export const APP_VERSION = '1.0.0';
 
 export const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
