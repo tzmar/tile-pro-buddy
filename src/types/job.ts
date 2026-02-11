@@ -82,10 +82,24 @@ export interface ShoppingItem {
   purchased: boolean;
 }
 
+export interface DailyLog {
+  id: string;
+  date: string;
+  jobId: string;
+  timeStarted: string;
+  timeFinished: string;
+  hoursWorked: number;
+  materialsUsed: string;
+  problems: string;
+  notes: string;
+  mood: 'good' | 'okay' | 'tough';
+}
+
 export interface Settings {
   hourlyRate: number;
   defaultProfitMargin: number;
   commonTileSizes: number[];
   businessName: string;
   measurementUnit: 'meters' | 'feet';
+  userName: string;
 }

@@ -12,6 +12,7 @@ import TimerPage from "./pages/TimerPage";
 import CompletedJobs from "./pages/CompletedJobs";
 import SettingsPage from "./pages/SettingsPage";
 import ShoppingList from "./pages/ShoppingList";
+import DailyLog from "./pages/DailyLog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/completed" element={<CompletedJobs />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/shopping" element={<ShoppingList />} />
+              <Route path="/daily-log" element={<DailyLog />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

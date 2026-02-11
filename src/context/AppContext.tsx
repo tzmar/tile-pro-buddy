@@ -1,16 +1,18 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Job, Settings, ShoppingItem } from '@/types/job';
+import { Job, Settings, ShoppingItem, DailyLog } from '@/types/job';
 import { DEFAULT_SETTINGS } from '@/data/constants';
 
 interface AppContextType {
   jobs: Job[];
   settings: Settings;
   shoppingList: ShoppingItem[];
+  dailyLogs: DailyLog[];
   addJob: (job: Job) => void;
   updateJob: (job: Job) => void;
   deleteJob: (id: string) => void;
   updateSettings: (s: Settings) => void;
   setShoppingList: React.Dispatch<React.SetStateAction<ShoppingItem[]>>;
+  addDailyLog: (log: DailyLog) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -30,6 +32,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [jobs, setJobs] = useState<Job[]>(() => load('tilepro-jobs', []));
   const [settings, setSettings] = useState<Settings>(() => load('tilepro-settings', DEFAULT_SETTINGS));
   const [shoppingList, setShoppingListState] = useState<ShoppingItem[]>(() => load('tilepro-shopping', []));
+  const [dailyLogs, setDailyLogs] = useState<DailyLog[]>(() => load('tilepro-dailylogs', []));
 
   const addJob = useCallback((job: Job) => {
     setJobs(prev => { const next = [...prev, job]; save('tilepro-jobs', next); return next; });
@@ -55,8 +58,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const addDailyLog = useCallback((log: DailyLog) => {
+    setDailyLogs(prev => { const next = [...prev, log]; save('tilepro-dailylogs', next); return next; });
+  }, []);
+
   return (
-    <AppContext.Provider value={{ jobs, settings, shoppingList, addJob, updateJob, deleteJob, updateSettings, setShoppingList }}>
+    <AppContext.Provider value={{ jobs, settings, shoppingList, dailyLogs, addJob, updateJob, deleteJob, updateSettings, setShoppingList, addDailyLog }}>
       {children}
     </AppContext.Provider>
   );
