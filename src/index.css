@@ -4,72 +4,91 @@
 
 @layer base {
   :root {
-    --background: 210 25% 97%;
-    --foreground: 220 40% 13%;
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 13%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 13%;
-    --primary: 214 84% 46%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 221 83% 33%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 30% 92%;
-    --secondary-foreground: 220 40% 13%;
-    --muted: 210 20% 94%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 36 95% 52%;
-    --accent-foreground: 30 90% 15%;
+    --secondary: 220 14% 93%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 25% 88%;
-    --input: 214 25% 88%;
-    --ring: 214 84% 46%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 221 83% 33%;
     --radius: 0.75rem;
-    --success: 142 71% 40%;
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 30 90% 15%;
-    --sidebar-background: 220 40% 13%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Skill category colors */
+    --skill-electronics: 217 91% 60%;
+    --skill-construction: 25 95% 53%;
+    --skill-mechanics: 0 72% 51%;
+    --skill-digital: 142 71% 45%;
+    --skill-painting: 280 67% 55%;
+    --skill-plumbing: 199 89% 48%;
+    --skill-ceiling: 45 93% 47%;
+
+    --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 25% 90%;
-    --sidebar-primary: 214 84% 56%;
+    --sidebar-primary: 221 83% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 35% 20%;
+    --sidebar-accent: 222 40% 18%;
     --sidebar-accent-foreground: 210 25% 90%;
-    --sidebar-border: 220 30% 22%;
-    --sidebar-ring: 214 84% 56%;
+    --sidebar-border: 222 30% 20%;
+    --sidebar-ring: 221 83% 53%;
   }
 
   .dark {
-    --background: 220 30% 8%;
-    --foreground: 210 25% 92%;
-    --card: 220 30% 12%;
-    --card-foreground: 210 25% 92%;
-    --popover: 220 30% 12%;
-    --popover-foreground: 210 25% 92%;
-    --primary: 214 84% 56%;
+    --background: 222 47% 6%;
+    --foreground: 210 20% 92%;
+    --card: 222 40% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 25% 18%;
-    --secondary-foreground: 210 25% 92%;
-    --muted: 220 20% 16%;
-    --muted-foreground: 215 16% 60%;
-    --accent: 36 95% 52%;
-    --accent-foreground: 30 90% 15%;
+    --secondary: 222 30% 16%;
+    --secondary-foreground: 210 20% 92%;
+    --muted: 222 25% 14%;
+    --muted-foreground: 220 9% 56%;
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 20%;
-    --input: 220 20% 20%;
-    --ring: 214 84% 56%;
-    --success: 142 71% 40%;
+    --border: 222 20% 18%;
+    --input: 222 20% 18%;
+    --ring: 221 83% 53%;
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 30 90% 15%;
-    --sidebar-background: 220 30% 6%;
+    --warning-foreground: 0 0% 100%;
+
+    --skill-electronics: 217 91% 60%;
+    --skill-construction: 25 95% 53%;
+    --skill-mechanics: 0 72% 51%;
+    --skill-digital: 142 71% 45%;
+    --skill-painting: 280 67% 55%;
+    --skill-plumbing: 199 89% 48%;
+    --skill-ceiling: 45 93% 47%;
+
+    --sidebar-background: 222 47% 5%;
     --sidebar-foreground: 210 25% 90%;
-    --sidebar-primary: 214 84% 56%;
+    --sidebar-primary: 221 83% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 25% 14%;
+    --sidebar-accent: 222 30% 12%;
     --sidebar-accent-foreground: 210 25% 90%;
-    --sidebar-border: 220 20% 14%;
-    --sidebar-ring: 214 84% 56%;
+    --sidebar-border: 222 20% 12%;
+    --sidebar-ring: 221 83% 53%;
   }
 }
 
@@ -79,6 +98,13 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 shadow-lg;
   }
 }
